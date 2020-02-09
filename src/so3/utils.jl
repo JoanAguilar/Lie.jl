@@ -14,7 +14,8 @@ end
 Rotation angle for the rotation matrix `R`.
 """
 function angle(R::RotationMatrix)
-    return angle(log(R, VectorSO3Algebra))
+    mat = convert(Array, R)
+    return acos((mat[1, 1] + mat[2, 2] + mat[3, 3] - 1) / 2)
 end
 
 """
@@ -24,7 +25,17 @@ Rotation unit axis for the rotation matrix `R`. Returns an array full of `NaN` i
 angle is ``0`` or a multiple of ``π``.
 """
 function axis(R::RotationMatrix)
-    return axis(log(R, VectorSO3Algebra))
+    mat = convert(Array, R)
+    θ = angle(R)
+    if θ > 0
+        ax_den = 2 * sin(θ)
+        ax_num_vec = [mat[3, 2] - mat[2, 3],
+                      mat[1, 3] - mat[3, 1],
+                      mat[2, 1] - mat[1, 2]]
+        return ax_num_vec / ax_den
+    else
+        return [NaN; NaN; NaN]
+    end
 end
 
 

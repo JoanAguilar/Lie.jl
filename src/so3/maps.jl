@@ -27,8 +27,7 @@ end
 Logarithmic map for the ``SO(3)`` element `R`.
 """
 function Base.:log(R::RotationMatrix, T::Type{VectorSO3Algebra})
-    mat = convert(Array, R)
-    θ = acos((mat[1, 1] + mat[2, 2] + mat[3, 3] - 1) / 2)
+    θ = angle(R)
     if θ > 0
         ax_den = 2 * sin(θ)
         ax_num_vec = [mat[3, 2] - mat[2, 3],

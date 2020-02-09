@@ -14,7 +14,7 @@ abstract type AbstractSO3Group <: AbstractLieGroup end
 """
     RotationMatrix{T}
 
-    Concrete type that stores an ``SO(3)`` Group element as a 3×3 rotation matrix.
+Concrete type that stores an ``SO(3)`` Group element as a 3×3 rotation matrix.
 
 The elements of the matrix are stored as scalars of type `T`.
 """

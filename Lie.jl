@@ -7,10 +7,11 @@ include("src/so3/so3.jl")
 export AbstractLieGroup
 export AbstractLieAlgebra
 
-# SO(3) types
+# SO(3)
 export AbstractSO3Group
 export AbstractSO3Algebra
 export RotationMatrix
-export VectorSO3Algebra, angle, axis
+export VectorSO3Algebra
+export angle, axis
 
 end

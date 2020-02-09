@@ -1,5 +1,5 @@
 """
-    *(R, S, T)
+    *(R, S, T...)
 
 Rotation matrix multiplication.
 """
@@ -23,7 +23,7 @@ end
 
 
 """
-    +(ω, χ, η)
+    +(ω, χ, η...)
 
 ``so3`` element summation.
 """
@@ -57,25 +57,25 @@ end
 
 
 """
-    *(x, ω)
+    *(x, ω, η...)
 
 Multiplication between a scalar `x` and an ``so3`` element `ω`.
 """
-function Base.:*(x::T, ω::VectorSO3Algebra, a...) where T<:Real
-    if length(a) == 0
+function Base.:*(x::T, ω::VectorSO3Algebra, η...) where T<:Real
+    if length(η) == 0
         return VectorSO3Algebra(x * convert(Array, ω), checks=false)
     else
-        return *(VectorSO3Algebra(x * convert(Array, ω), checks=false), a...)
+        return *(VectorSO3Algebra(x * convert(Array, ω), checks=false), η...)
     end
 end
 
 
 """
-    *(ω, x)
+    *(ω, x, η...)
 
 Multiplication between a scalar `x` and an ``so3`` element `ω`.
 """
-function Base.:*(ω::VectorSO3Algebra, x::T, a...) where T<:Real
+function Base.:*(ω::VectorSO3Algebra, x::T, η...) where T<:Real
     return *(x, ω, a...)
 end
 
