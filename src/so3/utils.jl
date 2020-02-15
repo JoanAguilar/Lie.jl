@@ -3,7 +3,7 @@
 
 Convert rotation matrix `R` to an array of type `T`.
 """
-function Base.:convert(T::Type{Array}, R::RotationMatrix)
+function Base.:convert(T::Type{<:Array}, R::RotationMatrix)
     return convert(T, R.R)
 end
 
@@ -13,7 +13,7 @@ end
 
 Rotation angle for the rotation matrix `R`.
 """
-function angle(R::RotationMatrix)
+function Base.:angle(R::RotationMatrix)
     mat = convert(Array, R)
     return acos((mat[1, 1] + mat[2, 2] + mat[3, 3] - 1) / 2)
 end
@@ -27,7 +27,11 @@ angle is ``0`` or a multiple of ``π``.
 function axis(R::RotationMatrix)
     mat = convert(Array, R)
     θ = angle(R)
-    if θ > 0
+    if θ % π ≈ 0
+        @warn "Rotation angle $θ of input rotation matrix is close to 0 or π, rotation axis " *
+        "might be ill-defined."
+    end
+    if θ % π ≠ 0
         ax_den = 2 * sin(θ)
         ax_num_vec = [mat[3, 2] - mat[2, 3],
                       mat[1, 3] - mat[3, 1],
@@ -81,7 +85,7 @@ end
 
 Convert ``so3`` element `ω` to an array of type `T`.
 """
-function Base.:convert(T::Type{Array}, ω::VectorSO3Algebra)
+function Base.:convert(T::Type{<:Array}, ω::VectorSO3Algebra)
     return convert(T, ω.ω)
 end
 
@@ -90,7 +94,7 @@ end
 
 Rotation angle for the ``so3`` element `ω`.
 """
-function angle(ω::VectorSO3Algebra)
+function Base.:angle(ω::VectorSO3Algebra)
     return norm(convert(Array, ω))
 end
 
@@ -102,10 +106,14 @@ angle is ``0`` or a multiple of ``π``.
 """
 function axis(ω::VectorSO3Algebra)
     θ = angle(ω)
-    if θ % π == 0
-        return [NaN; NaN; NaN]
-    else
+    if θ % π ≈ 0
+        @warn "Rotation angle $θ of input algebra element is close to 0 or π, rotation axis " *
+        "might be ill-defined."
+    end
+    if θ > 0
         return convert(Array, ω) / θ
+    else
+        return [NaN; NaN; NaN]
     end
 end
 

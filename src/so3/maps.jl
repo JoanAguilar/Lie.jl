@@ -28,13 +28,12 @@ Logarithmic map for the ``SO(3)`` element `R`.
 """
 function Base.:log(R::RotationMatrix, T::Type{VectorSO3Algebra})
     θ = angle(R)
-    if θ > 0
-        ax_den = 2 * sin(θ)
-        ax_num_vec = [mat[3, 2] - mat[2, 3],
-                      mat[1, 3] - mat[3, 1],
-                      mat[2, 1] - mat[1, 2]]
-        return T(θ * ax_num_vec / ax_den, checks=false)
-    else
+    if θ == 0
         return zero(T)
+    elseif θ == π
+        throw(ArgumentError("Rotation angle of input rotation matrix is π. Logarithmic map is " *
+                            "not unique."))
+    else
+        return T(θ * axis(R), checks=false)
     end
 end

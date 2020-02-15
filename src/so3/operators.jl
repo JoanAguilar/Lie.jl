@@ -57,26 +57,22 @@ end
 
 
 """
-    *(x, ω, η...)
+    *(x, ω)
 
 Multiplication between a scalar `x` and an ``so3`` element `ω`.
 """
-function Base.:*(x::T, ω::VectorSO3Algebra, η...) where T<:Real
-    if length(η) == 0
-        return VectorSO3Algebra(x * convert(Array, ω), checks=false)
-    else
-        return *(VectorSO3Algebra(x * convert(Array, ω), checks=false), η...)
-    end
+function Base.:*(x::T, ω::VectorSO3Algebra) where T<:Real
+    return VectorSO3Algebra(x * convert(Array, ω), checks=false)
 end
 
 
 """
-    *(ω, x, η...)
+    *(ω, x)
 
 Multiplication between a scalar `x` and an ``so3`` element `ω`.
 """
-function Base.:*(ω::VectorSO3Algebra, x::T, η...) where T<:Real
-    return *(x, ω, a...)
+function Base.:*(ω::VectorSO3Algebra, x::T) where T<:Real
+    return *(x, ω)
 end
 
 

@@ -23,12 +23,12 @@ struct RotationMatrix{T<:Real} <: AbstractSO3Group
 
 
     """
-        RotationMatrix(x, [checks=true])
+        RotationMatrix{T}(x, [checks=true])
 
     Construct a `RotationMatrix` instance from array `x`, if `checks` is set to `true`, correctness
     checks are performed during construction.
     """
-    function RotationMatrix(R::Array{T, 2}; checks::Bool=true) where T<:Real
+    function RotationMatrix{T}(R::Array{<:Real, 2}; checks::Bool=true) where T<:Real
         if checks
             if size(R) ≠ (3, 3)
                 throw(ArgumentError("Expected size (3, 3), got $(size(R)). `R` is not a " *
@@ -42,6 +42,16 @@ struct RotationMatrix{T<:Real} <: AbstractSO3Group
         end
 	new{T}(R)
     end
+end
+
+
+"""
+    RotationMatrix(x::Array{T, 2}, [checks=true])
+
+Convenience wrapper for ``RotationMatrix{T}(x; checks=checks)``.
+"""
+function RotationMatrix(R::Array{T, 2}; checks::Bool=true) where T<:Real
+    return RotationMatrix{T}(R; checks=checks)
 end
 
 
@@ -64,12 +74,12 @@ struct VectorSO3Algebra{T<:Real} <: AbstractLieAlgebra
     ω::Array{T, 1}
 
     """
-        VectorSO3Algebra(ω, [checks=true])
+        VectorSO3Algebra{T}(ω, [checks=true])
 
     Construct a `VectorSO3Algebra` instance from vector `ω`, if `checks` is set to `true`,
     correctness checks are performed during construction.
     """
-    function VectorSO3Algebra(ω::Array{T, 1}; checks::Bool=true) where T<:Real
+    function VectorSO3Algebra{T}(ω::Array{<:Real, 1}; checks::Bool=true) where T<:Real
         if checks
             if size(ω) ≠ (3,)
                 throw(ArgumentError("Expected size (3,) got $(size(ω)). `ω` can't be used as a " *
@@ -78,4 +88,14 @@ struct VectorSO3Algebra{T<:Real} <: AbstractLieAlgebra
         end
         new{T}(ω)
     end
+end
+
+
+"""
+    VectorSO3Algebra(ω::Array{T, 1}, [checks=true])
+
+Convenience wrapper for ``VectorSO3Algebra{T}(ω, checks=checks)``.
+"""
+function VectorSO3Algebra(ω::Array{T, 1}; checks::Bool=true) where T<:Real
+    return VectorSO3Algebra{T}(ω; checks=checks)
 end
