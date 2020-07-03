@@ -1,17 +1,15 @@
 module Lie
 
 include("src/abstract_types.jl")
-include("src/so3/so3.jl")
+include("src/real_array.jl")
 
-# Abstract Lie types
+# Abstract types
 export AbstractLieGroup
-export AbstractLieAlgebra
 
-# SO(3)
-export AbstractSO3Group
-export AbstractSO3Algebra
-export RotationMatrix
-export VectorSO3Algebra
-export angle, axis
+# LieRealArray
+export LieRealArray
+export LieRealArrayRepresentation
+export from, from_array
+export to, to_array
 
 end
