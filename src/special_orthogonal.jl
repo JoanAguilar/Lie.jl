@@ -291,7 +291,7 @@ end
 Lie-group multiplication for `SpecialOrthogonal` instances.
 """
 function Base.:*(q::SpecialOrthogonal, r::SpecialOrthogonal, s...)
-	mul = SpecialOrthogonal(q.R + r.R)
+	mul = SpecialOrthogonal(q.R * r.R)
 	if length(s) == 0
 		return mul
 	else
