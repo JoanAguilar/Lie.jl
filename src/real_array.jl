@@ -138,23 +138,6 @@ end
 
 
 """
-	*(q::LieRealArray, ω::Array{<:Real})
-
-Multiplication between the Lie group element `q` and the Lie algebra element `ω`.
-
-Note that this operation for `LieRealArray` has no effect on `ω` and this method is only provided to match
-the interface of other Lie types.
-"""
-function Base.:*(q::LieRealArray, ω::Array{<:Real})
-	if size(to_array(q)) != size(ω)
-		error("Both arrays must be the same size, got " * string(size(to_array(q))) * " and " *
-		      string(size(ω)) * ".")
-	end
-	return copy(ω)
-end
-
-
-"""
 	one(q::LieRealArray)
 
 Lie-group multiplicative identity element corresponding to `q`.
