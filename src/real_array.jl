@@ -27,14 +27,14 @@ end
 
 
 """
-	from(array::Array{<:Real}, repr::LieRealArrayRepresentation)
+	from(repr::LieRealArrayRepresentation, array::Array{<:Real})
 
 Create an instance of `LieRealArray` from `array` that's using the representation `repr`.
 
 As this is a trivial case, only one representation is available (`array`), and the method is only provided
 in order to match the interface of other Lie types.
 """
-function from(array::Array{<:Real}, repr::LieRealArrayRepresentation)
+function from(repr::LieRealArrayRepresentation, array::Array{<:Real})
 	if repr == LieRealArrayRepresentation.array
 		return from_array(array)
 	else
@@ -56,14 +56,14 @@ end
 
 
 """
-	to(q::LieRealArray, repr::LieRealArrayRepresentation)
+	to(repr::LieRealArrayRepresentation, q::LieRealArray)
 
 Convert an instance of `LieRealArray` to an `Array` that uses representation `repr`.
 
 As this is a trivial case, only one representation is available (`array`), and the method is only provided
 in order to match the interface of other Lie types.
 """
-function to(q::LieRealArray, repr::LieRealArrayRepresentation)
+function to(repr::LieRealArrayRepresentation, q::LieRealArray)
 	if repr == LieRealArrayRepresentation.array
 		return to_array(q)
 	else
@@ -85,13 +85,13 @@ end
 
 
 """
-	exp(ω::Array{<:Real}, T::Type{LieRealArra})
+	exp(T::Type{LieRealArray}, ω::Array{<:Real})
 
 Exponential map for `LieRealArray`.
 
 The output is an instance of `LieRealArray` containing a copy of `ω`.
 """
-function Base.:exp(ω::Array{<:Real}, T::Type{LieRealArray})
+function Base.:exp(T::Type{LieRealArray}, ω::Array{<:Real})
 	return from_array(ω)
 end
 

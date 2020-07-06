@@ -1,3 +1,5 @@
+using LinearAlgebra: I
+
 # FIXME: Use dual quaternions instead of transformation matrices as the internal representation.
 """
 	SpecialEuclidean
@@ -125,7 +127,7 @@ end
 
 
 """
-	exp(ω::Array{<:Real, 1}, T::Type{SpecialEuclidean})
+	exp(T::Type{SpecialEuclidean}, ω::Array{<:Real, 1})
 
 Exponential map for `SpecialEuclidean`.
 
@@ -133,7 +135,7 @@ The input `ω` is an element of the Lie algebra se(3) as a 6-element `Array` (th
 corresponding to displacement, and the remaining 3 to rotation). The output is an element of the Lie group
 SE(3) as the corresponding instance of `SpecialEuclidean`.
 """
-function Base.:exp(ω::Array{<:Real, 1}, T::Type{SpecialEuclidean})
+function Base.:exp(T::Type{SpecialEuclidean}, ω::Array{<:Real, 1})
 	T = Array{Float64, 2}(undef, 4, 4)
 	T[1:3, 1:3] = rodrigues(ω[1:3])
 	T[1:3, 4] = copy(ω[4:6])

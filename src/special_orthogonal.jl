@@ -28,11 +28,11 @@ end
 
 
 """
-	from(array::Array{<:Real}, repr::SpecialOrthogonalRepresentation)
+	from(repr::SpecialOrthogonalRepresentation, array::Array{<:Real})
 
 Create an instance of `SpecialOrthogonal` from `array` that's using the representation `repr`.
 """
-function from(array::Array{<:Real}, repr::SpecialOrthogonalRepresentation)
+function from(repr::SpecialOrthogonalRepresentation, array::Array{<:Real})
 	if repr == SpecialOrthogonalRepresentation.rotation_matrix
  		return from_rotation_matrix(array)
 	elseif repr == SpecialOrthogonalRepresentation.quaternion
@@ -135,14 +135,14 @@ end
 
 
 """
-	to(q::SpecialOrthogonal, repr::SpecialOrthogonalRepresentation)
+	to(repr::SpecialOrthogonalRepresentation, q::SpecialOrthogonal)
 
 Convert an instance of `SpecialOrthogonal` to an `Array` that uses representation `repr`.
 
 Note that certain representations can be multi-valued, that is, there might exist multiple valid
 output values for a single `q`.
 """
-function to(q::SpecialOrthogonal, repr::SpecialOrthogonal)
+function to(repr::SpecialOrthogonalRepresentation, q::SpecialOrthogonal)
 	if repr == SpecialOrthogonalRepresentation.rotation_matrix
  		return to_rotation_matrix(array)
 	elseif repr == SpecialOrthogonalRepresentation.quaternion
@@ -259,14 +259,14 @@ end
 
 
 """
-	exp(ω::Array{<:Real, 1}, T::Type{SpecialOrthogonal})
+	exp(T::Type{SpecialOrthogonal}, ω::Array{<:Real, 1})
 
 Exponential map for `SpecialOrthogonal`.
 
 The input `ω` is an element of the Lie algebra so(3) as a 3-element `Array`, the output is an element of
 the Lie group SO(3) as the corresponding instance of `SpecialOrthogonal`
 """
-function Base.:exp(ω::Array{<:Real, 1}, T::Type{SpecialOrthogonal})
+function Base.:exp(T::Type{SpecialOrthogonal}, ω::Array{<:Real, 1})
 	return from_rotation_vector(ω)
 end
 
@@ -310,7 +310,7 @@ The output is a 3-element vector which corresponds to `v` after applying the rot
 Equivalent to `to_rotation_matrix(q) * v`.
 """
 function Base.:*(q::SpecialOrthogonal, v::Array{<:Real, 1})
-	return to_rotation_matrix(q) * v
+	return q.R * v
 end
 
 
