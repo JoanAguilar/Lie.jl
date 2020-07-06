@@ -1,3 +1,5 @@
+# TODO: Add checks for incorrect inputs (e.g. from_matrix(zeros(10, 10))).
+
 using LinearAlgebra: I
 
 # FIXME: Use dual quaternions instead of transformation matrices as the internal representation.

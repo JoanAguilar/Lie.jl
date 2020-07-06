@@ -1,3 +1,5 @@
+# TODO: Add checks for incorrect inputs (e.g. from_quaternion(zeros(30))).
+
 using LinearAlgebra: eigvecs, I, norm, tr
 
 
